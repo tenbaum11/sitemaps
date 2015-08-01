@@ -1,0 +1,102 @@
+sitemap demo label="Demo House"
+{
+	Frame label="Test Nodes" {
+		Group item=TestNodes label="Test Nodes" icon="sensor_node32"
+		Colorpicker item=RGB_LED icon="slider"
+	}
+	Frame {
+		Text item=Date
+		Text item=w 
+		Text item=Weather_Temperature valuecolor=[Weather_LastUpdate=="Uninitialized"="lightgray",Weather_LastUpdate>90="lightgray",>25="orange",>15="green",>5="orange",<=5="blue"] {
+			Frame {
+				Text item=Weather_Temp_Max valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
+				Text item=Weather_Temp_Min valuecolor=[>25="orange",>15="green",>5="orange",<=5="blue"]
+				Text item=Weather_Humidity
+				Text item=Weather_Humidex
+				Text item=Weather_LastUpdate visibility=[Weather_LastUpdate>30] valuecolor=[Weather_LastUpdate>120="orange", Weather_LastUpdate>300="red"]
+			}
+			Frame {
+				Switch item=Weather_Chart_Period label="Chart Period" mappings=[0="Hour", 1="Day", 2="Week"]
+				Chart item=Weather_Chart period=h refresh=6000 visibility=[Weather_Chart_Period==0, Weather_Chart_Period=="Uninitialized"]
+				Chart item=Weather_Chart period=D refresh=30000 visibility=[Weather_Chart_Period==1]
+				Chart item=Weather_Chart period=W refresh=30000 visibility=[Weather_Chart_Period==2]
+			}
+		}
+	}
+	Frame label="Control" {
+		Text label="Apartment" icon="house" {
+
+			Frame label="Mood Lighting" {
+				Selection item=Scene_General label="Scene Selection" mappings=[0=off, 1=TV, 2=Bedtime, 3=Reading, 4=Morning, 5=Away, 6=DogsAlone, 7=Motion]
+				Switch item=Scene_General label="Scene" mappings=[1=TV, 2=Dinner, 3=Reading, 4=TV, 5=Dinner, 6=Reading]
+				//Setpoint  item=Temperature_Setpoint minValue=16 maxValue=28 step=0.5
+			}
+			Frame label="TV Control" {
+				Switch item=TV_Command label="TV SOUND" mappings=[551502015=MUTE, 2=VOL_UP, 3=VOL_DOWN]
+				Switch item=TV_Command label="TV INPUT" mappings=[4=ROKU, 5=CHROME, 6=ANTENNA]
+				Text item=V_IRSENDER_212_26
+				Switch item=V_IRSENDER_212_21  label="TV Mute" 	 			 			
+				Switch item=V_IRSENDER_212_22  label="TV Volume Step Up "
+				Switch item=V_IRSENDER2_212_22 label="TV Volume Step Down" 	
+				Group item=IR2
+			}
+			Frame label="Map/Location" {
+				Mapview item=VTLocation height=20
+			}
+			
+		}
+		Text label="IR Comms" icon="infrared32" {
+			Text item=V_IRSENDER_212_26   label="IR Msg Recv String [%s]"	
+			Switch item=V_IRSENDER_212_21  label="TV Mute" 	 
+		}
+		Text label="RF Comms" icon="rf32" {
+			Text item=RH_Command  	 		
+			Text item=RH_Sender	
+			Text item=RH_Msg  
+		}
+	}
+	Frame {
+		Group item=Nodes label="Nodes" icon="sensor_node32"
+		Group item=Sensors label="Sensors" icon="sensor32"
+		Group item=Messages label="Messages" icon="cmd_msg32"
+		Group item=Outdoors label="Outdoor" icon="garden" 
+	}
+	Frame {
+		Text item=MS_BMP_TEMP label="BMP Temperature [%s °F]" icon="sensor32"
+		Text item=MS_BMP_BARRO label="BMP Pressure [%s inHg]" icon="sensor32"
+		Text item=MS_DHT_TEMP label="DHT Temperature [%s °F]" icon="sensor32"
+		Text item=MS_DHT_RHUM label="DHT Relative Humidity[%s %%]" icon="sensor32"
+		Text item=MS_PIR label="PIR [%s %%]" icon="sensor32"
+		Text item=MS_THERM label="THERM [%s %%]" icon="sensor32"
+	}
+	Frame label="Quick Control" {
+		//Switch item=Lights 
+		//Group item=Lights	
+		Switch item=Etek
+		Group item=Etek
+		//Slider item=NanoDimmer
+		//Switch item=NanoSwitch
+		Slider item=MegaDimmer
+		Switch item=MegaSwitch
+		//Slider item=UnoDimmer
+		//Switch item=UnoSwitch
+		//Colorpicker item=RGB_LED icon="slider"
+	}
+	
+
+
+	
+	
+	Frame label="Data Plots" {
+		Text item=Sensors_Online {
+			Frame {
+				Switch item=Sensor_Chart_Period label="Chart Period" mappings=[0="Hour", 1="Day", 2="Week"]
+				Chart item=Sensor_Chart label="Sensor_Chart 1" period=h refresh=30000 visibility=[Sensor_Chart_Period==0, Sensor_Chart_Period=="Uninitialized"]
+				Chart item=Sensor_Chart2 label="Sensor_Chart 2" period=h refresh=30000 visibility=[Sensor_Chart_Period==1]
+			}
+		}
+	}
+		
+
+	
+}
